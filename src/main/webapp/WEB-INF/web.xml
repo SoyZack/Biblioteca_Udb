@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+   version="6.0">
+    <!-- version="6.0" es el esquema de Jakarta EE 10. Si se deja en 5.0 y el
+         namespace sigue siendo jakarta.ee, el despliegue falla por incompatibilidad
+         de esquema.
+
+         Aqui no hay servlet ni welcome-file: la aplicacion no usa servlets, solo JSP.
+         La portada index.jsp la resuelve el contenedor por defecto. -->
+    <session-config>
+        <!-- 30 minutos de inactividad. Ninguna pagina de esta aplicacion usa session,
+             pero el timeout se deja configurado. -->
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>

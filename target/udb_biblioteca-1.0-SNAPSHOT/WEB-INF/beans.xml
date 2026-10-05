@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd"
+       bean-discovery-mode="all">
+    <!-- bean-discovery-mode="all" hace que CDI registre cualquier clase con
+         anotaciones de bean. En este proyecto los beans NO son CDI: los crea el
+         action <jsp:useBean> de cada JSP y se usan con JDBC directo, sin
+         @Inject ni contenedor. Este archivo esta vacio a proposito y podria
+         borrarse sin cambiar el funcionamiento. -->
+</beans>

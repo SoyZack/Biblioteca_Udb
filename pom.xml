@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- artifactId con guion bajo: es el nombre del WAR y tambien el contexto de la
+         aplicacion. Por eso las referencias al paquete Java usan udb_biblioteca.
+         El context-root se puede fijar aparte en GlassFish con
+         sun-web.xml / glassfish-web.xml si se quisiera cambiar. -->
+    <groupId>com.mycompany</groupId>
+    <artifactId>udb_biblioteca</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!-- war, no jar: esta aplicacion se despliega en un servidor, no se ejecuta
+         con "java -jar". -->
+    <packaging>war</packaging>
+    <name>udb_biblioteca-1.0-SNAPSHOT</name>
+    
+    <properties>
+        <!-- Necesario para que los acentos de los JSP y del codigo Java no se
+             deformen al compilar. -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jakartaee>10.0.0</jakartaee>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <!-- API de Jakarta EE 10: es lo que GlassFish ya trae, asi que no se
+                 empaqueta en el WAR. -->
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakartaee}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!-- Driver de MySQL. Sin scope provided, Maven lo copia a
+                 WEB-INF/lib, que es necesario: el driver no forma parte de Jakarta
+                 EE y el servidor no lo trae. Sin esta dependencia, la primera
+                 conexion falla con ClassNotFoundException y las paginas dan 500. -->
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.0.0</version>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Fija Java 11 en compilador y en bytecode. Sin source/target, Maven
+                     usaria el JDK instalado, y un WAR compilado con un JDK mas nuevo
+                     que el del servidor no arranca en GlassFish. -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+            <!-- maven-war-plugin sin configuracion: solo empaqueta el WAR con
+                 src/main/webapp en la raíz y las clases en WEB-INF/classes. Los JSP no
+                 se compilan aqui, se compilan al desplegar. Si se quisiera
+                 comprobarlos antes, haria falta glassfish-web.xml o Jasper. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,7 @@
+com\mycompany\udb_biblioteca\resources\JakartaEE10Resource.class
+com\mycompany\udb_biblioteca\JakartaRestConfiguration.class
+udb_biblioteca\CategoriaBean.class
+udb_biblioteca\PrestamoBean.class
+udb_biblioteca\LibroBean.class
+udb_biblioteca\Conexion.class
+udb_biblioteca\EstudianteBean.class
